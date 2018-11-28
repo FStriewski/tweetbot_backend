@@ -1,7 +1,8 @@
 // start nodemon for server and console, use http localhost:4001/tweets for testing requests.
 
 const express = require('express')
-var cors = require('cors');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const Twit = require('twit')
 const app = express()
 
@@ -13,33 +14,21 @@ const twit = new Twit({
 });
 
 app.use(cors());
-
-// app.get('/test', (request, response) => {
-//   console.log('test successfull')
-//   response.end()
-// })
-
-
+app.use(bodyParser.json());
 
 app.get('/tweets', (request, response) => {
   twit
-    .get('search/tweets', { q: 'elonmusk', count: 1 })
-    .then(response => {
-      const result = response.data.statuses[0].text
-      console.log(result)
-      return result
-    });
-
-response.end()
+    .get(
+      'search/tweets',
+      { q: 'elonmusk', count: 1 },
+      (err, data, res) => { response.send(data) }
+    )
 })
 
-// app.get('/followers', (request, response) => {
-//   twit.get(
-//     'followers/id',
-//     { screen_name: 'superfakecat'},
-//     data => console.log(data)
-//   ).then(data => console.log(data))
-// response.end()
-// })
+app.get('/followers', (request, response) => {
+  twit.get('followers/ids', { screen_name: 'BillGates' }, (err, data, res) => {
+    response.send(data);
+  });
+});
 
-app.listen(4001, ()=> console.log("API on port 4001"))
+app.listen(4001, () => console.log("API on port 4001"))
