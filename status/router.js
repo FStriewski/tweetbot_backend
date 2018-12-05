@@ -1,15 +1,19 @@
 const Router = require('express').Router;
 // const Sequelize = require('sequelize');
-// const Events = require('./model');
-const twit = require('../credentials/twit')
+const twit = require('../credentials/twit');
+const keywordQuery = require('./transformation');
 
-;
 const router = new Router();
 
 router.get('/tweets', (request, response) => {
-  twit.get('search/tweets', { q: 'elonmusk', count: 1 }, (err, data, res) => {
-    response.send(data);
-  });
+  twit.get(
+    'search/tweets',
+    { q: request.query.keyword, count: 2 },
+    (err, data, res) => {
+      let parsedKeywordQuery = keywordQuery(data);
+      response.send(parsedKeywordQuery);
+    }
+  );
 });
 
 module.exports = router;
