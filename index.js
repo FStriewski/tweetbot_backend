@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 const statusRouter = require('./status/router')
 app.use(statusRouter)
 
-
 app.get('/status', (request, response) => {
   twit
   .get('statuses/sample', 

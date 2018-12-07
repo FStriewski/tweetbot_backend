@@ -8,7 +8,7 @@ const router = new Router();
 router.get('/tweets', (request, response) => {
   twit.get(
     'search/tweets',
-    { q: request.query.keyword, count: 2 },
+    { q: request.query.keyword, count: request.query.count || 5},
     (err, data, res) => {
       let parsedKeywordQuery = keywordQuery(data);
       response.send(parsedKeywordQuery);
