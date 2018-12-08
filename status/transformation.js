@@ -1,15 +1,3 @@
-const model = {
-  created_at: 'string', // date time
-  coordinates: '?', // ?
-  text: 'string', // tweet body
-  retweetCount: 'number',
-  id: 'number', //userid
-  name: 'string', // user name
-  screen_name: 'string', // profile name
-  activeSince: '', // user created at
-  location: 'string', // country
-  followersCount: 'number'
-};
 
 const keywordQuery = function(input) {
   return input.statuses.map(message => ({

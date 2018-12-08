@@ -5,10 +5,13 @@ const keywordQuery = require('./transformation');
 
 const router = new Router();
 
+
+
+
 router.get('/tweets', (request, response) => {
   twit.get(
     'search/tweets',
-    { q: request.query.keyword, count: request.query.count || 5},
+    { q: request.query.keyword, count: request.query.count || 5, lang: request.lang || "en", result_type: "popular"},
     (err, data, res) => {
       let parsedKeywordQuery = keywordQuery(data);
       response.send(parsedKeywordQuery);
